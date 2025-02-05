@@ -1,19 +1,56 @@
-// import heroImage from "../assets/Rectangle.png";
+"use client";
+import Image from "next/image";
+import heroImage from "../../public/Rectangle.png";
 import RegisterTeamCard from "./hero-components/RegisterTeamCard";
+import TeamRegistrationDialog from "./hero-components/Registration_dialog_box";
+import { useState } from "react";
 
 export default function Hero() {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [email, setemail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage("");
+
+    try {
+      const res = await fetch("/api/save-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        alert("Email saved successfully!");
+        setemail(""); // Clear input field
+      } else {
+        alert(data.error || "Something went wrong!");
+      }
+    } catch (error) {
+      alert("Network error! Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
-    <main className="container mx-auto px-6 py-16 relative m-0">
+    <main className="container mx-auto py-16 relative m-0  w-screen px-0">
       {/* Background Patterns */}
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0 mr-0 pr-0">
         {/* Yellow Ellipse Background */}
         <div
           className="absolute right-0 top-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#F7A800] rounded-full opacity-30 blur-3xl"
-          style={{ transform: "translateX(-60px) translateY(-50%)" }}
+          style={{ transform: "translateX(0) translateY(-50%)" }}
         ></div>
 
         {/* Yellow Glow Above the Hero Image */}
-        <div className="absolute right-0 top-[10%] w-[500px] h-[300px] bg-[#F7A800] rounded-full opacity-20 blur-2xl"></div>
+        <div className="absolute -right-16 top-[10%] w-[500px] h-[300px] bg-[#F7A800] rounded-full opacity-20 blur-2xl"></div>
 
         {/* Circular Patterns - Left Top */}
         <div className="absolute -left-25 -top-0 w-[200px] h-[200px] opacity-30">
@@ -46,7 +83,7 @@ export default function Hero() {
         </div>
 
         {/* Circular Patterns - Right Top */}
-        <div className="absolute -right-36 -top-25 w-[200px] h-[200px] opacity-30">
+        <div className="absolute -right-16 -top-25 w-[200px] h-[200px] opacity-30">
           <svg viewBox="0 0 200 200" className="w-full h-full">
             <circle
               cx="100"
@@ -75,7 +112,7 @@ export default function Hero() {
           </svg>
         </div>
 
-        <div className="absolute right-99 top-20 w-[200px] h-[200px] opacity-30">
+        <div className="absolute -right-16 top-20 w-[200px] h-[200px] opacity-30">
           <svg viewBox="0 0 200 200" className="w-full h-full">
             <circle
               cx="100"
@@ -105,7 +142,7 @@ export default function Hero() {
         </div>
 
         {/* Circular Patterns - Right Bottom */}
-        <div className="absolute -right-22 bottom-0 w-[200px] h-[200px] opacity-30">
+        <div className="absolute -right-16 bottom-0 w-[200px] h-[200px] opacity-30">
           <svg
             viewBox="0 0 200 200"
             className="w-full h-full transform rotate-90"
@@ -203,8 +240,11 @@ export default function Hero() {
             <h3 className="text-lg font-medium mb-4">
               Subscribe for early access!!
             </h3>
-            <form className="flex gap-4">
+            <form onSubmit={handleSubmit} className="flex gap-4">
               <input
+                onChange={(e) => {
+                  setemail(e.target.value);
+                }}
                 type="email"
                 placeholder="Email Id"
                 className="flex-1 px-4 py-2.5 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-[#F7A800] text-gray-800 placeholder:text-gray-400"
@@ -213,7 +253,7 @@ export default function Hero() {
                 type="submit"
                 className="px-6 py-2.5 bg-[#F7A800] text-white rounded-md hover:bg-[#e69a00] transition-colors font-medium"
               >
-                Subscribe
+                {loading ? "Submitting..." : "Submit"}
               </button>
             </form>
           </div>
@@ -305,18 +345,22 @@ export default function Hero() {
             </svg>
           </div>
 
-          <RegisterTeamCard />
+          <RegisterTeamCard onOpen={() => setIsDialogOpen(true)} />
+          <TeamRegistrationDialog
+            iisOpen={isDialogOpen}
+            onClose={() => setIsDialogOpen(false)}
+          />
         </div>
 
         {/* Right Column */}
         <div className="relative top-[-94px]">
           {/* Yellow Glow Behind the Hero Image */}
-          <div className="absolute right-30 top-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-[#F4C24D] rounded-full opacity-80"></div>
+          <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-[#F4C24D] rounded-full opacity-80"></div>
 
           {/* Hero Image */}
           <div className="relative z-10">
-            <img
-              src={heroImage}
+            <Image
+              src={heroImage || "/placeholder.svg"}
               alt="Illustration of person working"
               width={600}
               height={600}
