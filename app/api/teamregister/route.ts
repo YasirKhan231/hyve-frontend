@@ -10,7 +10,7 @@ export async function POST(req: Request) {
     }
 
     // Insert team data into Supabase (team_email and team_members are arrays)
-    const { data, error } = await supabase
+    const {  error } = await supabase
       .from("team_information")
       .insert([{
         team_name: teamName,
@@ -24,7 +24,7 @@ export async function POST(req: Request) {
     if (error) throw error;
 
     return NextResponse.json({ message: "Team registered successfully!" }, { status: 201 });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  } catch (error) {
+    return NextResponse.json({ error: "error.message" }, { status: 500 });
   }
 }

@@ -9,12 +9,8 @@ export default function Hero() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [email, setemail] = useState("");
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setMessage("");
 
     try {
       const res = await fetch("/api/save-email", {
@@ -33,7 +29,7 @@ export default function Hero() {
       } else {
         alert(data.error || "Something went wrong!");
       }
-    } catch (error) {
+    } catch {
       alert("Network error! Please try again.");
     } finally {
       setLoading(false);

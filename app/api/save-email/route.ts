@@ -16,7 +16,7 @@ export async function POST(req: Request) {
         }
 
         return NextResponse.json({ message: 'Email saved successfully', data }, { status: 200 });
-    } catch (error: any) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
+    } catch (error) {
+        return NextResponse.json({ error:" error.message" }, { status: 500 });
     }
 }

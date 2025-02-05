@@ -164,7 +164,7 @@ export default function TeamRegistrationDialog({
     } else {
       setMaxTeamSize(null);
     }
-  }, [teamSize]);
+  }, [teamSize, getSelectedTeamSize]);
 
   return (
     <Dialog open={iisOpen} onOpenChange={onClose}>
