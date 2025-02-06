@@ -98,14 +98,12 @@ export default function Hero() {
                 />
               </div>
 
-             
-                <RegisterTeamCard onOpen={() => setIsDialogOpen(true)} />
-              
+              <RegisterTeamCard onOpen={() => setIsDialogOpen(true)} />
             </div>
           </div>
 
           {/* Right Column */}
-          <div className="relative hidden lg:flex justify-center animate-fade-in [animation-delay:0.5s]">
+          <div className="relative hidden lg:flex justify-center animate-fade-in [animation-delay:0.5s] ml-32">
             <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg mx-auto">
               <RightSvg />
             </div>
