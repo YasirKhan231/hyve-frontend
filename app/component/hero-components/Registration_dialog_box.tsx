@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { X, AlertCircle } from "lucide-react";
+import { X, AlertCircle, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -22,6 +22,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 interface TeamMember {
   name: string;
   role: string;
+  email: string;
 }
 
 interface TeamSize {
@@ -36,6 +37,7 @@ const TEAM_SIZES: TeamSize[] = [
   { value: "medium", label: "4-8 members", min: 4, max: 8 },
   { value: "large", label: "10-15 members", min: 10, max: 15 },
 ];
+
 interface TeamRegistrationDialogProps {
   iisOpen: boolean;
   onClose: () => void;
@@ -48,14 +50,14 @@ export default function TeamRegistrationDialog({
   const [teamName, setTeamName] = useState("");
   const [teamSize, setTeamSize] = useState<string>("");
   const [expertise, setExpertise] = useState("");
-  const [teamEmail, setTeamEmail] = useState("");
-  const [teamEmails, setTeamEmails] = useState<string[]>([]);
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
   const [showMemberInputs, setShowMemberInputs] = useState(false);
   const [maxTeamSize, setMaxTeamSize] = useState<number | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [currentMember, setCurrentMember] = useState<TeamMember>({
     name: "",
     role: "",
+    email: "",
   });
   const [error, setError] = useState("");
 
@@ -79,8 +81,8 @@ export default function TeamRegistrationDialog({
   };
 
   const handleAddMember = () => {
-    if (!currentMember.name || !currentMember.role) {
-      setError("Please fill in both name and role for the team member");
+    if (!currentMember.name || !currentMember.role || !currentMember.email) {
+      setError("Please fill in name, role, and email for the team member");
       return;
     }
 
@@ -90,7 +92,7 @@ export default function TeamRegistrationDialog({
     }
 
     setTeamMembers([...teamMembers, currentMember]);
-    setCurrentMember({ name: "", role: "" });
+    setCurrentMember({ name: "", role: "", email: "" });
     setError("");
 
     // Hide member inputs if we've reached the maximum
@@ -105,8 +107,10 @@ export default function TeamRegistrationDialog({
   };
 
   const handleRegister = async () => {
-    if (!teamName || !teamSize || !expertise || teamEmails.length === 0) {
-      setError("Please fill in all required fields");
+    if (!teamName || !teamSize || !expertise || teamMembers.length === 0) {
+      setError(
+        "Please fill in all required fields and add at least one team member"
+      );
       return;
     }
 
@@ -114,6 +118,8 @@ export default function TeamRegistrationDialog({
       setError(`You need at least ${getSelectedTeamSize()?.min} team members`);
       return;
     }
+
+    setIsSubmitting(true); // Start submission
 
     try {
       const response = await fetch("/api/teamregister", {
@@ -125,30 +131,28 @@ export default function TeamRegistrationDialog({
           teamName,
           maxTeamSize,
           expertise,
-          teamEmails,
           teamMembers,
         }),
       });
 
       if (!response.ok) {
-        alert("Failed to submit team registration");
+        throw new Error("Failed to submit team registration");
       }
 
-      // Handle successful submission
       alert("Team registration submitted successfully");
       setTeamName("");
       setTeamSize("");
       setExpertise("");
-      setTeamEmail("");
-      setTeamEmails([]);
       setTeamMembers([]);
       setShowMemberInputs(false);
-      setCurrentMember({ name: "", role: "" });
+      setCurrentMember({ name: "", role: "", email: "" });
       setError("");
       onClose();
     } catch (error) {
       alert("Failed to submit team registration. Please try again.");
       console.error("Error submitting team registration:", error);
+    } finally {
+      setIsSubmitting(false); // End submission
     }
   };
 
@@ -156,7 +160,7 @@ export default function TeamRegistrationDialog({
   useEffect(() => {
     setTeamMembers([]);
     setShowMemberInputs(false);
-    setCurrentMember({ name: "", role: "" });
+    setCurrentMember({ name: "", role: "", email: "" });
     setError("");
     const selectedSize = getSelectedTeamSize();
     if (selectedSize) {
@@ -164,27 +168,21 @@ export default function TeamRegistrationDialog({
     } else {
       setMaxTeamSize(null);
     }
-  }, [teamSize]);
+  }, [teamSize, getSelectedTeamSize]); // Added getSelectedTeamSize to dependencies
 
   return (
     <Dialog open={iisOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px] max-h-[80vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[500px] max-h-[85vh] overflow-y-auto scrollbar-thin scrollbar-thumb-yellow-400 scrollbar-track-gray-200">
         <DialogHeader>
-          <div className="flex justify-between items-center">
-            <DialogTitle className="text-xl font-semibold">
+          <div className="flex justify-between items-center mb-4">
+            <DialogTitle className="text-3xl font-bold text-gray-800">
               Team Registration
             </DialogTitle>
-            {/* <Button
-              variant="ghost"
-              className="h-6 w-6 p-0 rounded-full"
-              onClick={onClose}
-            >
-              <X className="h-4 w-4" />
-            </Button> */}
+            <Users className="h-8 w-8 text-yellow-500" />
           </div>
         </DialogHeader>
 
-        <div className="space-y-4 py-4">
+        <div className="space-y-6 py-4">
           <div className="space-y-2">
             <label className="text-sm font-medium text-gray-700">
               Team Name
@@ -193,6 +191,7 @@ export default function TeamRegistrationDialog({
               placeholder="Enter team name"
               value={teamName}
               onChange={(e) => setTeamName(e.target.value)}
+              className="border-gray-300 focus:border-yellow-500 focus:ring-yellow-500"
             />
           </div>
 
@@ -201,7 +200,7 @@ export default function TeamRegistrationDialog({
               Team Size
             </label>
             <Select value={teamSize} onValueChange={setTeamSize}>
-              <SelectTrigger>
+              <SelectTrigger className="border-gray-300 focus:border-yellow-500 focus:ring-yellow-500">
                 <SelectValue placeholder="Select team size" />
               </SelectTrigger>
               <SelectContent>
@@ -219,7 +218,7 @@ export default function TeamRegistrationDialog({
               Primary Expertise
             </label>
             <Select value={expertise} onValueChange={setExpertise}>
-              <SelectTrigger>
+              <SelectTrigger className="border-gray-300 focus:border-yellow-500 focus:ring-yellow-500">
                 <SelectValue placeholder="Select expertise" />
               </SelectTrigger>
               <SelectContent>
@@ -231,53 +230,8 @@ export default function TeamRegistrationDialog({
             </Select>
           </div>
 
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-gray-700">
-              Team Emails
-            </label>
-            <div className="flex space-x-2">
-              <Input
-                type="email"
-                placeholder="Enter team email"
-                value={teamEmail}
-                onChange={(e) => setTeamEmail(e.target.value)}
-              />
-              <Button
-                onClick={() => {
-                  if (teamEmail && !teamEmails.includes(teamEmail)) {
-                    setTeamEmails([...teamEmails, teamEmail]);
-                    setTeamEmail("");
-                  }
-                }}
-              >
-                Add
-              </Button>
-            </div>
-            {teamEmails.length > 0 && (
-              <div className="mt-2 space-y-1">
-                {teamEmails.map((email, index) => (
-                  <div
-                    key={index}
-                    className="flex justify-between items-center bg-gray-100 p-2 rounded"
-                  >
-                    <span>{email}</span>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() =>
-                        setTeamEmails(teamEmails.filter((_, i) => i !== index))
-                      }
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-
           {teamSize && (
-            <div className="space-y-2">
+            <div className="space-y-4">
               <div className="flex justify-between items-center">
                 <label className="text-sm font-medium text-gray-700">
                   Team Members ({teamMembers.length}/
@@ -288,6 +242,7 @@ export default function TeamRegistrationDialog({
                     variant="outline"
                     size="sm"
                     onClick={() => setShowMemberInputs(true)}
+                    className="bg-yellow-100 text-yellow-700 border-yellow-300 hover:bg-yellow-200"
                   >
                     Add Team Member
                   </Button>
@@ -295,7 +250,7 @@ export default function TeamRegistrationDialog({
               </div>
 
               {showMemberInputs && (
-                <div className="space-y-4 border rounded-lg p-4">
+                <div className="space-y-4 border border-gray-200 rounded-lg p-4 bg-gray-50 shadow-sm">
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-gray-700">
                       Member Name
@@ -309,6 +264,7 @@ export default function TeamRegistrationDialog({
                           name: e.target.value,
                         })
                       }
+                      className="border-gray-300 focus:border-yellow-500 focus:ring-yellow-500"
                     />
                   </div>
                   <div className="space-y-2">
@@ -324,11 +280,29 @@ export default function TeamRegistrationDialog({
                           role: e.target.value,
                         })
                       }
+                      className="border-gray-300 focus:border-yellow-500 focus:ring-yellow-500"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-gray-700">
+                      Member Email
+                    </label>
+                    <Input
+                      type="email"
+                      placeholder="Enter member email"
+                      value={currentMember.email}
+                      onChange={(e) =>
+                        setCurrentMember({
+                          ...currentMember,
+                          email: e.target.value,
+                        })
+                      }
+                      className="border-gray-300 focus:border-yellow-500 focus:ring-yellow-500"
                     />
                   </div>
                   <Button
                     variant="outline"
-                    className="w-full"
+                    className="w-full bg-yellow-400 text-yellow-800 border-yellow-500 hover:bg-yellow-500"
                     onClick={handleAddMember}
                   >
                     Add Member
@@ -341,18 +315,23 @@ export default function TeamRegistrationDialog({
                   {teamMembers.map((member, index) => (
                     <div
                       key={index}
-                      className="flex justify-between items-center p-2 bg-gray-50 rounded"
+                      className="flex justify-between items-center p-3 bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200"
                     >
                       <div>
-                        <span className="font-medium">{member.name}</span>
-                        <span className="text-gray-500 ml-2">
+                        <span className="font-medium text-gray-800">
+                          {member.name}
+                        </span>
+                        <span className="text-gray-600 ml-2">
                           ({member.role})
+                        </span>
+                        <span className="text-gray-500 ml-2 text-sm">
+                          {member.email}
                         </span>
                       </div>
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="h-8 w-8 p-0 text-gray-500 hover:text-red-500"
+                        className="h-8 w-8 p-0 text-gray-400 hover:text-red-500 hover:bg-red-50"
                         onClick={() => handleRemoveMember(index)}
                       >
                         <X className="h-4 w-4" />
@@ -365,7 +344,10 @@ export default function TeamRegistrationDialog({
           )}
 
           {error && (
-            <Alert variant="destructive">
+            <Alert
+              variant="destructive"
+              className="bg-red-50 border-red-200 text-red-800"
+            >
               <AlertCircle className="h-4 w-4" />
               <AlertDescription>{error}</AlertDescription>
             </Alert>
@@ -373,11 +355,15 @@ export default function TeamRegistrationDialog({
         </div>
 
         <Button
-          className="w-full bg-[#F5A623] hover:bg-[#F5A623]/90 text-white"
-          size="lg"
+          className={`w-full font-semibold text-lg py-6 ${
+            isSubmitting
+              ? "bg-yellow-500 cursor-not-allowed"
+              : "bg-yellow-500 hover:bg-yellow-600 text-white"
+          }`}
           onClick={handleRegister}
+          disabled={isSubmitting}
         >
-          Register Team
+          {isSubmitting ? "Submitting..." : "Register Team"}
         </Button>
       </DialogContent>
     </Dialog>
