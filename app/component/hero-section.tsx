@@ -44,71 +44,51 @@ export default function Hero() {
       {/* Background Patterns */}
       <BackgroundPatterns />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 md:pt-4">
-        <div className="grid lg:grid-cols-2 gap-11 items-center">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8 pt-20 md:pt-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-11 items-center px-4 sm:px-6 lg:px-20">
           {/* Left Column */}
-          <div className="space-y-8 relative ">
+          <div className="space-y-8 text-center lg:text-left">
             <div className="mb-6">
-              <h2 className="text-xl mb-2">Coming Soon</h2>
-              <div className="w-12 h-1 bg-[#F7A800]"></div>
+              <h2 className="text-lg sm:text-xl mb-2">Coming Soon</h2>
+              <div className="w-12 h-1 bg-[#F7A800] mx-auto lg:mx-0"></div>
             </div>
 
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-text leading-tight mb-6">
+            <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-text leading-tight mb-6">
               Get Notified
               <br />
               When we Launch
             </h1>
 
-            <p className="text-text-secondary text-base sm:text-lg max-w-xl animate-slide-up [animation-delay:0.3s]">
+            <p className="text-text-secondary text-base sm:text-lg max-w-xl mx-auto lg:mx-0 animate-slide-up [animation-delay:0.3s]">
               Get ready to elevate your career at HYVE! Connect with exciting
               gigs, build teams, and form meaningful connections to create great
               projects and get paid more. Join us soon and shape the future
               together!
             </p>
-            <div className="flex gap-x-3">
-              {/* Subscription Form */}
-              <div className="bg-white/50 backdrop-blur-sm p-3 rounded-3xl  shadow-lg hover:shadow-xl transition-shadow">
-                {/* Decorative Wave on Top */}
-                {/* <div className="absolute left-0 right-0 -top-3">
-                <svg viewBox="0 0 400 24" className="w-full">
-                  <path
-                    d="M0,24 C100,0 200,24 300,0 C400,24 500,0 600,24"
-                    fill="white"
-                  />
-                </svg>
-              </div> */}
-                <h3 className="text-lg mb-3 text-text-secondary">
-                  Subscribe for early access!!
-                </h3>
 
+            <div className="flex flex-col sm:flex-row gap-4 items-center justify-center lg:justify-start">
+              {/* Subscription Form */}
+              <div className="bg-white/50 w-full sm:w-[300px] backdrop-blur-sm p-4 rounded-3xl shadow-lg hover:shadow-xl transition-shadow">
+                <h3 className="text-lg mb-3 text-text-secondary">
+                  Subscribe for Early Access!
+                </h3>
                 <form
                   onSubmit={handleSubmit}
-                  className="flex flex-col sm:flex-row gap-x-3 "
+                  className="flex flex-col space-y-2"
                 >
                   <input
-                    onChange={(e) => {
-                      setemail(e.target.value);
-                    }}
+                    onChange={(e) => setemail(e.target.value)}
                     type="email"
-                    placeholder="Email Id"
-                    className="flex-1 px-4 py-2 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary transition-all"
+                    placeholder="Enter your email"
+                    className="w-full px-4 py-2 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary transition-all"
                   />
                   <button
                     type="submit"
-                    className="px-6 py-2 bg-primary text-text font-medium rounded-xl transition-all hover:scale-105 active:scale-95 disabled:opacity-50 disabled:hover:scale-100"
+                    className="w-full py-2.5 bg-primary hover:bg-[#e69a00] text-black rounded-xl flex items-center justify-center transition-colors font-medium"
                   >
-                    {loading ? "Submitting..." : "Submit"}
+                    {loading ? "Submitting..." : "Subscribe"}
                   </button>
                 </form>
-                {/* {isSubmitted && (
-                <motion.p
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-green-600 mt-2"
-                >
-                  Thank you for subscribing!
-                </motion.p>
-              )} */}
               </div>
 
               <div>
@@ -117,16 +97,16 @@ export default function Hero() {
                   onClose={() => setIsDialogOpen(false)}
                 />
               </div>
-              <div>
+
+             
                 <RegisterTeamCard onOpen={() => setIsDialogOpen(true)} />
-              </div>
+              
             </div>
           </div>
 
           {/* Right Column */}
-          <div className="relative lg:block animate-fade-in [animation-delay:0.5s] lg:ml-20">
-            {/* Yellow Glow Behind the Hero Image */}
-            <div className="relative w-full aspect-square max-w-lg mx-auto">
+          <div className="relative hidden lg:flex justify-center animate-fade-in [animation-delay:0.5s]">
+            <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg mx-auto">
               <RightSvg />
             </div>
           </div>

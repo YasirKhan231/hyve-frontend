@@ -2,7 +2,8 @@ import React from "react";
 
 const RegisterTeamCard = ({ onOpen }: { onOpen: () => void }) => {
   return (
-    <div className="bg-white/50 backdrop-blur-sm p-3 rounded-3xl  shadow-lg hover:shadow-xl transition-shadow">
+    <div className="bg-white/50 w-full sm:w-[300px] backdrop-blur-sm p-4 rounded-3xl shadow-lg hover:shadow-xl transition-shadow">
+      {/* Decorative SVG Wave */}
       <div className="absolute left-0 right-0 -top-3">
         <svg viewBox="0 0 400 24" className="w-full">
           <path
@@ -11,15 +12,20 @@ const RegisterTeamCard = ({ onOpen }: { onOpen: () => void }) => {
           />
         </svg>
       </div>
+
+      {/* Heading */}
       <h3 className="text-lg mb-3 text-text-secondary">
         Register Team Interest
       </h3>
-      {/* <p className="text-gray-600 text-base mb-6">
-        Are you a team looking to showcase your skills and find exciting
-        projects? Register your interest now!
-      </p> */}
+
+      {/* Description */}
+      <p className="text-gray-600 text-sm sm:text-base md:text-lg mb-6 text-center sm:text-left">
+        Register your interest now!
+      </p>
+
+      {/* Register Button */}
       <button
-        className="w-full py-2.5 bg-primary gap-x-3 hover:bg-[#e69a00] text-black rounded-xl flex items-center justify-center  transition-colors font-medium"
+        className="w-full flex items-center justify-center gap-x-2 py-3 px-4 bg-primary hover:bg-[#e69a00] text-black rounded-xl transition-all font-medium"
         onClick={onOpen}
       >
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">

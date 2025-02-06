@@ -1233,7 +1233,6 @@ const RightSvg = () => {
           </g>
         </g>
       </svg>
-      ;
     </div>
   );
 }
