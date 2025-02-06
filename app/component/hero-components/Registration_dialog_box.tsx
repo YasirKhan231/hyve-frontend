@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { X, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -60,9 +60,9 @@ export default function TeamRegistrationDialog({
   const [error, setError] = useState("");
 
   // Get the selected team size limits
-  const getSelectedTeamSize = () => {
+  const getSelectedTeamSize = useCallback(() => {
     return TEAM_SIZES.find((size) => size.value === teamSize);
-  };
+  }, [teamSize]);
 
   // Check if can add more members
   const canAddMoreMembers = () => {
