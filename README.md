@@ -1,1 +1,1 @@
-HYVE  landing poge 
+landing page of the hyve project 
