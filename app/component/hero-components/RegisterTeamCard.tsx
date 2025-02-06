@@ -2,7 +2,7 @@ import React from "react";
 
 const RegisterTeamCard = ({ onOpen }: { onOpen: () => void }) => {
   return (
-    <div className="bg-white/50 max-w-[300px] w-full backdrop-blur-sm p-6 rounded-3xl shadow-lg hover:shadow-xl transition-shadow relative">
+    <div className="bg-white/50 max-w-[350px] w-full backdrop-blur-sm p-6 rounded-3xl shadow-lg hover:shadow-xl transition-shadow relative">
       {/* Decorative SVG Wave */}
       <div className="absolute left-0 right-0 -top-3">
         <svg viewBox="0 0 400 24" className="w-full">

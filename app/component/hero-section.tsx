@@ -68,7 +68,7 @@ export default function Hero() {
               together!
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 items-center justify-center lg:justify-start">
+            <div className="flex flex-col sm:flex-row gap-2 items-center justify-center lg:justify-start">
               {/* Subscription Form */}
               <div className="bg-white/50 w-full sm:w-[300px] backdrop-blur-sm p-4 rounded-3xl shadow-lg hover:shadow-xl transition-shadow">
                 <h3 className="text-lg mb-3 text-text-secondary">
@@ -102,7 +102,7 @@ export default function Hero() {
                 />
               </div>
 
-              <div className="max-w-[300px] w-full">
+              <div className="max-w-[334px] w-full mr-0">
                 <RegisterTeamCard onOpen={() => setIsDialogOpen(true)} />
               </div>
             </div>
