@@ -2,7 +2,7 @@ import React from "react";
 
 const RegisterTeamCard = ({ onOpen }: { onOpen: () => void }) => {
   return (
-    <div className="bg-white/50 w-full sm:w-[300px] backdrop-blur-sm p-4 rounded-3xl shadow-lg hover:shadow-xl transition-shadow">
+    <div className="bg-white/50 max-w-[300px] w-full backdrop-blur-sm p-6 rounded-3xl shadow-lg hover:shadow-xl transition-shadow relative">
       {/* Decorative SVG Wave */}
       <div className="absolute left-0 right-0 -top-3">
         <svg viewBox="0 0 400 24" className="w-full">
@@ -14,18 +14,16 @@ const RegisterTeamCard = ({ onOpen }: { onOpen: () => void }) => {
       </div>
 
       {/* Heading */}
-      <h3 className="text-lg mb-3 text-text-secondary">
-        Register Team Interest
-      </h3>
+      <h3 className="text-lg mb-3 text-text-secondary">Register Your Team</h3>
 
       {/* Description */}
-      <p className="text-gray-600 text-sm sm:text-base md:text-lg mb-6 text-center sm:text-left">
-        Register your interest now!
+      <p className="text-sm md:text-base mb-6 text-center sm:text-left text-gray-600">
+        Register your team now and connect with clients effortlessly.
       </p>
 
       {/* Register Button */}
       <button
-        className="w-full flex items-center justify-center gap-x-2 py-3 px-4 bg-primary hover:bg-[#e69a00] text-black rounded-xl transition-all font-medium"
+        className="w-full flex items-center justify-center gap-x-2 py-3 px-5 bg-primary hover:bg-[#e69a00] text-black rounded-xl transition-all font-medium"
         onClick={onOpen}
       >
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">

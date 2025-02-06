@@ -18,7 +18,7 @@ export default function Navbar() {
             <span className="text-xl font-semibold text-black">HYVE</span>
           </div>
 
-          {/* <nav>
+          <nav>
             <ul className="flex items-center gap-12">
               <li>
                 <Link
@@ -45,7 +45,7 @@ export default function Navbar() {
                 </Link>
               </li>
             </ul>
-          </nav> */}
+          </nav>
         </div>
       </div>
     </header>

@@ -203,9 +203,13 @@ export default function TeamRegistrationDialog({
               <SelectTrigger className="border-gray-300 focus:border-yellow-500 focus:ring-yellow-500">
                 <SelectValue placeholder="Select team size" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-white border border-gray-200 shadow-md text-gray-900">
                 {TEAM_SIZES.map((size) => (
-                  <SelectItem key={size.value} value={size.value}>
+                  <SelectItem
+                    key={size.value}
+                    value={size.value}
+                    className="hover:bg-gray-100"
+                  >
                     {size.label}
                   </SelectItem>
                 ))}
@@ -221,7 +225,7 @@ export default function TeamRegistrationDialog({
               <SelectTrigger className="border-gray-300 focus:border-yellow-500 focus:ring-yellow-500">
                 <SelectValue placeholder="Select expertise" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-white border border-gray-200 shadow-md">
                 <SelectItem value="development">Development</SelectItem>
                 <SelectItem value="design">Design</SelectItem>
                 <SelectItem value="marketing">Marketing</SelectItem>
