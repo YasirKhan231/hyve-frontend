@@ -1,70 +1,39 @@
-import Image from "next/image";
-import facebook from "../../public/facebook.png";
-import instgram from "../../public/instagram.png";
-import linkdin from "../../public/linkdin.png";
+import { Facebook, InstagramIcon, Linkedin } from "lucide-react";
+
 export default function Footer() {
   return (
-    <footer className="container mx-auto px-6 py-4 m-0">
-      <div
-        className="flex flex-col md:flex-row 
-      justify-between items-start"
-      >
-        {/* Social Media Section */}
-        <div className="flex flex-col items-end md:items-start md:mr-[10%]">
-          {" "}
-          {/* Adjusted with margin-right */}
-          <p className="text-[15px] text-[#666666] mb-2 font-poppins">
-            Follow us on:
-          </p>
-          <div className="flex items-center gap-6">
-            {/* Social Media Icons with Images */}
+    <footer className=" animate-fade-in [animation-delay:0.6s]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-8 md:gap-4">
+          <div className="text-center md:text-left">
+            <p className="text-text-secondary mb-2">Follow us on:</p>
+            <div className="flex space-x-6 mt-2">
+              {[
+                { icon: Linkedin, href: "#" },
+                { icon: InstagramIcon, href: "#" },
+                { icon: Facebook, href: "#" },
+              ].map((social, index) => (
+                <a
+                  key={index}
+                  href={social.href}
+                  className="text-text-secondary hover:text-primary transition-all hover:scale-110"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <social.icon className="h-6 w-6" />
+                </a>
+              ))}
+            </div>
+          </div>
+          <div className="text-center md:text-right">
+            <p className="text-text-secondary mb-2">Mail us at:</p>
             <a
-              href="#"
-              className="w-[40px] h-[40px] flex items-center justify-center text-[#666666] hover:text-white rounded-full transition-all duration-300"
-              aria-label="LinkedIn"
+              href="mailto:team@hyvework.com"
+              className="text-text hover:text-primary transition-colors inline-block hover:scale-105 transform"
             >
-              <Image
-                src={linkdin}
-                alt="LinkedIn"
-                className="w-[30px] h-[30px]"
-              />
-            </a>
-            <a
-              href="#"
-              className="w-[40px] h-[40px] flex items-center justify-center text-[#666666] hover:text-white rounded-full transition-all duration-300"
-              aria-label="Instagram"
-            >
-              <Image
-                src={instgram}
-                alt="Instagram"
-                className="w-[30px] h-[30px]"
-              />
-            </a>
-            <a
-              href="#"
-              className="w-[40px] h-[40px] flex items-center justify-center text-[#666666]  hover:text-white rounded-full transition-all duration-300"
-              aria-label="Facebook"
-            >
-              <Image
-                src={facebook}
-                alt="Facebook"
-                className="w-[30px] h-[30px]"
-              />
+              team@hyvework.com
             </a>
           </div>
-        </div>
-
-        {/* Contact Section */}
-        <div>
-          <p className="text-[15px] text-[#666666] mb-2 font-poppins">
-            Mail us at:
-          </p>
-          <a
-            href="mailto:team@hyvework.com"
-            className="text-[15px] text-[#666666] font-bold hover:opacity-80 transition-opacity font-poppins"
-          >
-            team@hyvework.com
-          </a>
         </div>
       </div>
     </footer>

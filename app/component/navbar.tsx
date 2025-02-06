@@ -5,7 +5,7 @@ import logo from "../../public/logo.png";
 export default function Navbar() {
   return (
     <header className="bg-white border-b-2 border-[#F7A800] relative">
-      <div className="container mx-auto px-6 py-4">
+      <div className="container mx-auto px-6 py-2">
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-2">
             <Image
@@ -18,7 +18,7 @@ export default function Navbar() {
             <span className="text-xl font-semibold text-black">HYVE</span>
           </div>
 
-          <nav>
+          {/* <nav>
             <ul className="flex items-center gap-12">
               <li>
                 <Link
@@ -45,7 +45,7 @@ export default function Navbar() {
                 </Link>
               </li>
             </ul>
-          </nav>
+          </nav> */}
         </div>
       </div>
     </header>
