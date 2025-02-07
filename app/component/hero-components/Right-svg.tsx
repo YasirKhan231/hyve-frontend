@@ -831,7 +831,7 @@ const RightSvg = () => {
             <g
               transform="matrix(0.9986971020698547,-0.05103014037013054,0.05103014037013054,0.9986971020698547,-392.874267578125,110.200927734375)"
               opacity="1"
-              style={{ display: "block" }}
+              style={{ display: 'block' }}
             >
               <g
                 opacity="1"
@@ -875,7 +875,7 @@ const RightSvg = () => {
             <g
               transform="matrix(0.9986971020698547,-0.05103014037013054,0.05103014037013054,0.9986971020698547,-392.874267578125,110.200927734375)"
               opacity="1"
-              style={{ display: "block" }}
+              style={{ display: 'block' }}
             >
               <g
                 opacity="1"
@@ -900,7 +900,7 @@ const RightSvg = () => {
             <g
               transform="matrix(0.9856086373329163,-0.16904334723949432,0.16904334723949432,0.9856086373329163,-436.57470703125,231.67538452148438)"
               opacity="1"
-        style={{'display': 'block'}}
+        style={{display: 'block'}}
             >
               <g
                 opacity="1"
@@ -963,7 +963,7 @@ const RightSvg = () => {
             <g
               transform="matrix(1,0,0,1,-360,60)"
               opacity="1"
-        style={{'display': 'block'}}
+        style={{display: 'block'}}
             >
               <g
                 opacity="1"
@@ -1184,7 +1184,7 @@ const RightSvg = () => {
             <g
               transform="matrix(0.9877464175224304,-0.15606726706027985,0.15606726706027985,0.9877464175224304,-428.2491455078125,222.7804718017578)"
               opacity="1"
-        style={{'display': 'block'}}
+        style={{display: 'block'}}
             >
               <g
                 opacity="1"

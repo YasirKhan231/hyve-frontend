@@ -42,11 +42,11 @@ export default function Hero() {
   };
 
   return (
-    <main className="relative overflow-hidden">
+    <main className="relative overflow-hidden pb-1">
       {/* Background Patterns */}
       <BackgroundPatterns />
 
-      <div className="mx-auto px-4 sm:px-6 lg:px-8 pt-20 md:pt-4">
+      <div className="mx-auto relative px-4 sm:px-6 lg:px-8 pt-20 md:pt-4">
         <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] items-center px-4 sm:px-6 lg:px-20">
           {/* Left Column */}
           <div className="space-y-8 text-center lg:text-left pl-8">
@@ -88,7 +88,7 @@ export default function Hero() {
                   <button
                     type="submit"
                     disabled={loading} // ✅ Change: Prevent multiple submissions
-                    className="w-full py-2.5 bg-primary hover:bg-[#e69a00] text-black rounded-xl flex items-center justify-center transition-colors font-medium"
+                    className="w-full py-2.5 bg-primary hover:bg-[#e69a00] text-white rounded-xl flex items-center justify-center transition-colors"
                   >
                     {loading ? "Submitting..." : "Subscribe"}
                   </button>

@@ -4,7 +4,7 @@ import Footer from "./component/footer";
 
 export default function LandingPage() {
   return (
-    <div className="">
+    <div className="min-h-screen flex flex-col">
       <Navbar />
       <Hero></Hero>
       {/* Ensures the Hero section fills remaining space */}
