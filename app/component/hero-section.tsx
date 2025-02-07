@@ -7,6 +7,7 @@ import { useState } from "react";
 import { BackgroundPatterns } from "./hero-components/background-patterns";
 import RightSvg from "./hero-components/Right-svg";
 import Footer from "./footer";
+import { motion } from "framer-motion";
 
 export default function Hero() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -52,7 +53,23 @@ export default function Hero() {
           <div className="space-y-8 text-center lg:text-left pl-8">
             <div className="mb-6">
               <h2 className="text-lg sm:text-xl mb-2">Coming Soon</h2>
-              <div className="w-12 h-1 bg-[#F7A800] mx-auto lg:mx-0"></div>
+              <div className="w-full max-w-[150px] sm:max-w-[150px] md:max-w-[150px] lg:max-w-[150px] h-2 bg-[#ffd98d] rounded-full overflow-hidden mx-auto lg:mx-0">
+                <motion.div
+                  className="h-full bg-[#e69a00]"
+                  initial={{ x: "-100%" }}
+                  animate={{ x: "100%" }}
+                  transition={{
+                    repeat: Infinity,
+                    duration: 2,
+                    ease: "linear",
+                  }}
+                  style={{
+                    width: "100%",
+                  }}
+                />
+              </div>
+
+              {/* <div className="w-12 h-1 bg-[#F7A800] mx-auto lg:mx-0"></div> */}
             </div>
 
             <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-text leading-tight mb-6">
@@ -109,11 +126,11 @@ export default function Hero() {
           </div>
 
           {/* Right Column */}
-          {/* Right Column */}
           <div className="relative hidden lg:flex justify-center animate-fade-in [animation-delay:0.5s] translate-x-[80px]">
             <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg mx-auto">
               <RightSvg />
             </div>
+            
           </div>
         </div>
         <Footer />
