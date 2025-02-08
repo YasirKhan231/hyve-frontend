@@ -23,7 +23,11 @@ export async function POST(req: Request) {
     if (error) throw error;
 
     return NextResponse.json({ message: "Team registered successfully!" }, { status: 201 });
-  } catch  {
-    return NextResponse.json({ error: "error.message" }, { status: 500 });
+  } catch (error) {
+    if (error instanceof Error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+    return NextResponse.json({ error: "An unknown error occurred" }, { status: 500 });
   }
+  
 }

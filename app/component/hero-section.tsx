@@ -130,7 +130,6 @@ export default function Hero() {
             <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg mx-auto">
               <RightSvg />
             </div>
-            
           </div>
         </div>
         <Footer />

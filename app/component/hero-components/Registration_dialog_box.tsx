@@ -34,8 +34,8 @@ interface TeamSize {
 
 const TEAM_SIZES: TeamSize[] = [
   { value: "small", label: "1-4 members", min: 1, max: 4 },
-  { value: "medium", label: "4-8 members", min: 4, max: 8 },
-  { value: "large", label: "10-15 members", min: 10, max: 15 },
+  { value: "medium", label: "4-8 members", min: 1, max: 8 },
+  { value: "large", label: "10-15 members", min: 1, max: 15 },
 ];
 
 interface TeamRegistrationDialogProps {
@@ -61,23 +61,18 @@ export default function TeamRegistrationDialog({
   });
   const [error, setError] = useState("");
 
-  // Get the selected team size limits
   const getSelectedTeamSize = useCallback(() => {
     return TEAM_SIZES.find((size) => size.value === teamSize);
   }, [teamSize]);
 
-  // Check if can add more members
   const canAddMoreMembers = () => {
     const selectedSize = getSelectedTeamSize();
     if (!selectedSize) return false;
     return teamMembers.length < selectedSize.max;
   };
 
-  // Check if minimum members requirement is met
   const hasMinimumMembers = () => {
-    const selectedSize = getSelectedTeamSize();
-    if (!selectedSize) return false;
-    return teamMembers.length >= selectedSize.min;
+    return teamMembers.length >= 1;
   };
 
   const handleAddMember = () => {
@@ -95,7 +90,6 @@ export default function TeamRegistrationDialog({
     setCurrentMember({ name: "", role: "", email: "" });
     setError("");
 
-    // Hide member inputs if we've reached the maximum
     if (teamMembers.length + 1 >= (getSelectedTeamSize()?.max || 0)) {
       setShowMemberInputs(false);
     }
@@ -115,11 +109,11 @@ export default function TeamRegistrationDialog({
     }
 
     if (!hasMinimumMembers()) {
-      setError(`You need at least ${getSelectedTeamSize()?.min} team members`);
+      setError("You need at least one team member");
       return;
     }
 
-    setIsSubmitting(true); // Start submission
+    setIsSubmitting(true);
 
     try {
       const response = await fetch("/api/teamregister", {
@@ -152,11 +146,10 @@ export default function TeamRegistrationDialog({
       alert("Failed to submit team registration. Please try again.");
       console.error("Error submitting team registration:", error);
     } finally {
-      setIsSubmitting(false); // End submission
+      setIsSubmitting(false);
     }
   };
 
-  // Reset member inputs when team size changes
   useEffect(() => {
     setTeamMembers([]);
     setShowMemberInputs(false);
@@ -168,7 +161,7 @@ export default function TeamRegistrationDialog({
     } else {
       setMaxTeamSize(null);
     }
-  }, [teamSize, getSelectedTeamSize]); // Added getSelectedTeamSize to dependencies
+  }, [getSelectedTeamSize]);
 
   return (
     <Dialog open={iisOpen} onOpenChange={onClose}>
